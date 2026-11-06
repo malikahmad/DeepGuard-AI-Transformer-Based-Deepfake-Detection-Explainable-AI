@@ -1,0 +1,6 @@
+{
+  "0": "Fake",
+  "1": "Real",
+  "image_size": 224,
+  "model_name": "vit_base_patch16_224"
+}
