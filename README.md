@@ -1,130 +1,93 @@
-# 🛡️ DeepGuard AI – Transformer-Based Deepfake Detection & Explainable AI
+# DeepGuard AI — Transformer-Based Deepfake Detection & Explainable AI
 
-**DeepGuard AI** is an AI-powered deepfake detection system that uses Transformer-based deep learning to classify facial images as **Real or Fake**. It combines Vision Transformer (ViT) architecture with Explainable AI techniques to make model predictions more interpretable.
+DeepGuard AI is an image-classification prototype for distinguishing facial images labelled **Real** or **Fake**. It combines a Vision Transformer (ViT) workflow with Grad-CAM++ visualizations to make model outputs easier to inspect.
 
-The system provides image-based predictions, confidence scores, and Grad-CAM++ heatmap visualizations highlighting regions that influenced the model's decision.
+> **Research disclaimer:** This is an experimental image-analysis project, not a forensic verification tool. A prediction or heatmap is not proof that an image is authentic or manipulated.
 
-## 🚀 Key Features
+## Highlights
 
-- 🔍 **Deepfake Detection:** Classifies facial images as Real or Fake.
-- 🧠 **Vision Transformer (ViT):** Transformer-based image classification.
-- 📊 **Model Evaluation:** Accuracy, Precision, Recall, F1-score, ROC-AUC, and confusion matrix.
-- 🔥 **Explainable AI:** Grad-CAM++ heatmaps and image overlays.
-- 🖼️ **Image Upload:** Upload an image for deepfake analysis.
-- ⚡ **Flask REST API:** Backend model inference and processing.
-- 💻 **Modern Dashboard:** Responsive React and TypeScript frontend.
-- 📈 **Model Insights:** Displays prediction confidence and visual explanations.
+- Image upload and Real/Fake classification.
+- Vision Transformer model implemented with PyTorch.
+- Prediction confidence display.
+- Grad-CAM++ heatmaps and overlays for visual inspection.
+- Model evaluation workflow for accuracy, precision, recall, F1-score, ROC-AUC, and confusion matrix.
+- Flask inference backend and React + TypeScript frontend.
 
-## 🛠️ Tech Stack
+## Technology
 
-| Category | Technologies |
+| Layer | Technology |
 |---|---|
-| Programming | Python |
-| Deep Learning | PyTorch |
-| Model Architecture | Vision Transformer (ViT) |
-| Explainable AI | Grad-CAM++ |
-| Computer Vision | OpenCV, PIL |
+| Language | Python |
+| Deep learning | PyTorch |
+| Architecture | Vision Transformer (ViT) |
+| Explainability | Grad-CAM++ |
+| Image processing | OpenCV, Pillow |
 | Backend | Flask, REST API |
 | Frontend | React, TypeScript, Vite |
-| Model Training | Google Colab |
-| Dataset | Deep Fake Detection Dataset (DFD) |
+| Experiment environment | Google Colab |
 
-## 🏗️ System Architecture
+## How it works
 
-1. User uploads a facial image.
+1. The user uploads a facial image.
 2. The backend validates and preprocesses the image.
-3. The trained Vision Transformer analyzes the image.
-4. The model predicts Real or Fake.
-5. Prediction confidence scores are generated.
-6. Grad-CAM++ creates a heatmap visualization.
-7. The frontend displays the prediction, original image, heatmap, and overlay.
+3. The ViT model produces class scores.
+4. The application displays the predicted class and confidence.
+5. Grad-CAM++ produces a visualization of image regions associated with the model output.
 
-## 📂 Project Structure
+Heatmaps are explanatory aids, not segmentation masks or evidence of model correctness.
+
+## Repository layout
 
 ```text
 DeepGuard-AI/
-│
 ├── backend/
 │   ├── app.py
 │   ├── model_utils.py
 │   └── requirements.txt
-│
 ├── frontend/
 │   ├── src/
-│   │   ├── App.tsx
-│   │   └── styles.css
 │   ├── package.json
 │   └── vite.config.ts
-│
 ├── models/
 │   ├── best_model.pth
 │   └── class_names.json
-│
 ├── notebooks/
 │   └── DeepGuard_AI_Colab.ipynb
-│
-├── README.md
-└── .gitignore
+└── README.md
 ```
 
-## 📊 Model Evaluation
+The layout above documents the intended project organization; filenames may differ if your local checkout has changed.
 
-The model is evaluated using:
+## Run locally
 
-- Accuracy
-- Precision
-- Recall
-- F1-score
-- ROC-AUC
-- Classification Report
-- Confusion Matrix
-
-Actual evaluation results should be added here after training and testing.
-
-## 🔥 Explainable AI – Grad-CAM++
-
-Grad-CAM++ generates visual heatmaps highlighting image regions that contribute to the model's prediction.
-
-These visualizations help interpret model behavior but should not be treated as definitive proof of image manipulation.
-
-## ⚙️ Installation and Setup
-
-### 1. Clone the repository
+### 1. Clone
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd DeepGuard-AI
+git clone https://github.com/malikahmad/DeepGuard-AI-Transformer-Based-Deepfake-Detection-Explainable-AI.git
+cd DeepGuard-AI-Transformer-Based-Deepfake-Detection-Explainable-AI
 ```
 
-### 2. Backend setup
+### 2. Backend
+
+Use a Python version compatible with the installed PyTorch dependencies.
 
 ```bash
 python -m venv .venv
 ```
 
-Activate the environment on Windows:
+Windows PowerShell:
 
 ```powershell
-.venv\Scripts\activate
-```
-
-Install dependencies:
-
-```bash
+.\.venv\Scripts\Activate.ps1
 pip install -r backend/requirements.txt
-```
-
-Place your trained model files inside the `models/` directory.
-
-### 3. Start Flask backend
-
-```bash
 python backend/app.py
 ```
 
-### 4. Frontend setup
+Place the trained checkpoint and class-name metadata in the location expected by the backend configuration.
 
-Open another terminal:
+### 3. Frontend
+
+Open a second terminal:
 
 ```bash
 cd frontend
@@ -132,35 +95,30 @@ npm install
 npm run dev
 ```
 
-Open the local URL displayed by Vite in your browser.
+Open the local URL printed by Vite.
 
-## 🎯 Project Objectives
+## Evaluation checklist
 
-- Explore Transformer-based deepfake detection.
-- Apply deep learning to digital image authenticity analysis.
-- Integrate Explainable AI into image classification.
-- Build a complete AI-powered web application.
-- Evaluate model performance using standard classification metrics.
+Before reporting a headline score, evaluate on a held-out test set that was not used for training or model selection. Include:
 
-## 🔮 Future Improvements
+- Dataset source, class balance, and split strategy.
+- Accuracy, precision, recall, and F1-score.
+- ROC-AUC where appropriate.
+- Confusion matrix and per-class results.
+- Cross-dataset or out-of-distribution testing where possible.
+- Checks for duplicate images and data leakage.
 
-- Video-based deepfake detection.
-- Face tracking and multi-frame analysis.
-- Real-time video inference.
-- Model robustness testing against compression and image manipulation.
-- Model calibration and improved generalization.
-- Expanded datasets and cross-dataset evaluation.
+**Measured results:** Add the actual run's metrics and evaluation date here. No performance score is asserted in this README.
 
-## 👨‍💻 Author
+## Limitations and next steps
 
-**Ahmad Zulfiqar**
+- Current workflow is image-based; video-level temporal analysis is not claimed.
+- Performance may change with compression, resizing, unseen sources, and manipulation methods.
+- Confidence scores should not be interpreted as calibrated probabilities unless calibration has been tested.
+- Grad-CAM++ may be unstable and does not establish causal reasoning.
 
-AI/ML Engineer | Machine Learning | Deep Learning | Computer Vision | Generative AI
+Potential extensions include video-frame analysis, robustness testing, calibration, and independent cross-dataset evaluation.
 
-## ⚠️ Disclaimer
+## Author
 
-DeepGuard AI is an experimental research and development project. Its predictions are not definitive evidence of authenticity or manipulation. Performance depends on training data, model quality, and evaluation conditions.
-
----
-
-⭐ If you find this project interesting, consider giving the repository a star!
+**Ahmad Zulfiqar** — [GitHub](https://github.com/malikahmad) · [LinkedIn](https://www.linkedin.com/in/malik-ahmad-06abb31a1/)
